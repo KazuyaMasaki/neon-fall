@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>落ちものパズルNEON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-panel">
+            <canvas id="board"></canvas>
+            <div class="info">
+                <h1>NEON FALL</h1>
+                <div class="score-area">
+                    <h2>SCORE</h2>
+                    <p id="score">0</p>
+                </div>
+
+				<div class="controls-area">
+					<h2>CONTROLS</h2>
+					<ul>
+						<li>
+							<div class="key-group">
+								<span class="key">←</span>
+								<span class="key">→</span>
+							</div>
+							<span>MOVE</span>
+						</li>
+						<li>
+							<span class="key">↑</span>
+							<span>ROTATE</span>
+						</li>
+						<li>
+							<span class="key">↓</span>
+							<span>SOFT DROP</span>
+						</li>
+						<li>
+							<span class="key">SPACE</span>
+							<span>HARD DROP</span>
+						</li>
+					</ul>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="constants.js"></script>
+		<script src="drawing.js"></script>
+    <script src="board.js"></script>
+    <script src="piece.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
