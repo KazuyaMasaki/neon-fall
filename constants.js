@@ -52,4 +52,8 @@ const BOMB_CHANCE = 0.1; // ボムが出現する確率 (10%)
 
 // ★追加：おじゃまブロック関連の定数
 const GARBAGE_ID = 9;
-const GARBAGE_INTERVAL = 20000; // おじゃまブロックが出現する間隔(ミリ秒) = 20秒
+const GARBAGE_INTERVAL = 18000; // おじゃまブロックが出現する間隔(ミリ秒) = 20秒
+
+// ★追加：カラーイーター関連の定数
+const COLOR_EATER_CHANCE = 0.15; // カラーイーターが出現する確率 (12%)
+const POINTS_PER_EATEN_BLOCK = 5; // カラーイーターが1ブロック食べるごとのスコア
