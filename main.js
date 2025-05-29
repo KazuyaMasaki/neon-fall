@@ -37,8 +37,30 @@ function addScore(linesCount) {
 
 // ★追加：ブロックが着地した際の共通処理を関数化
 function handleLanding() {
+    if (piece.isColorEater) { // ★追加：カラーイーターの処理を先頭に
+        // カラーイーター自身も消えるので、盤面には固定しない
+        // カラーイーターの位置と、その「食べる色」のIDを渡す
+        const eatenCount = board.eatConnectedBlocks(piece.x, piece.y, piece.typeId);
+
+        if (eatenCount > 0) {
+            score += eatenCount * POINTS_PER_EATEN_BLOCK;
+            scoreElement.textContent = score;
+            // ここでカラーイーター専用のパーティクルエフェクトを出しても良い
+            for(let i = 0; i < eatenCount * 2; i++) { // 消した数に応じてパーティクル
+                particles.push({
+                    x: piece.x + 0.5 + (Math.random() - 0.5) * 2, // 少し広範囲に
+                    y: piece.y + 0.5 + (Math.random() - 0.5) * 2,
+                    vx: (Math.random() - 0.5) * 0.1,
+                    vy: (Math.random() - 0.5) * 0.1,
+                    life: 20 + Math.random() * 20,
+                    size: Math.random() * 0.2 + 0.1,
+                    color: piece.color, // 食べた色でパーティクル
+                    gravity: 0
+                });
+            }
+        }
     // ★追加：着地したのがボムブロックか判定
-    if (piece.typeId === BOMB_ID) {
+    } else if (piece.typeId === BOMB_ID) {
         const bombX = piece.x + 0.5; // ブロックの中心X
         const bombY = piece.y + 0.5; // ブロックの中心Y
 

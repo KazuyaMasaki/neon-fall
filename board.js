@@ -110,4 +110,56 @@ class Board {
         // 一番下の行に新しいおじゃまラインを追加
         this.grid.push(garbageLine);
     }
+
+    eatConnectedBlocks(eaterX, eaterY, targetColorId) {
+        let eatenCount = 0;
+        const queue = [];
+        const visited = Array.from(
+            { length: ROWS }, () => Array(COLS).fill(false)
+        );
+        const directions = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+
+        // カラーイーターの周囲4マスを最初の探索キューに入れる
+        for (const [dx, dy] of directions) {
+            const startX = eaterX + dx;
+            const startY = eaterY + dy;
+
+            if (
+                startX >= 0 && startX < COLS &&
+                startY >= 0 && startY < ROWS &&
+                this.grid[startY][startX] === targetColorId && // 最初から色が一致しているか
+                !visited[startY][startX]
+            ) {
+                queue.push([startX, startY]);
+                visited[startY][startX] = true; // 最初にキューに入れるものも訪問済みに
+            }
+        }
+        
+        let head = 0;
+        while(head < queue.length) {
+            const [currentX, currentY] = queue[head++];
+
+            // 現在のブロックを食べる
+            if (this.grid[currentY][currentX] === targetColorId) { //念のため再確認
+                this.grid[currentY][currentX] = 0;
+                eatenCount++;
+            }
+
+            for (const [dx, dy] of directions) {
+                const nextX = currentX + dx;
+                const nextY = currentY + dy;
+
+                if (
+                    nextX >= 0 && nextX < COLS &&
+                    nextY >= 0 && nextY < ROWS &&
+                    !visited[nextY][nextX] &&
+                    this.grid[nextY][nextX] === targetColorId
+                ) {
+                    visited[nextY][nextX] = true;
+                    queue.push([nextX, nextY]);
+                }
+            }
+        }
+        return eatenCount;
+    }
 }

@@ -8,8 +8,9 @@
  * @param {string} color - ブロックの色
  * @param {number} typeId - ブロックの種類を識別するID
  * @param {number} timer - アニメーション用のタイマー
+ * @param {boolean} isColorEater - カラーイーターのフラグ
  */
-function drawBlock(ctx, x, y, color, typeId, timer = 0) {
+function drawBlock(ctx, x, y, color, typeId, timer = 0, isColorEater = false) {
     if (y < 0) return;
 
     ctx.fillStyle = color;
@@ -79,4 +80,18 @@ function drawBlock(ctx, x, y, color, typeId, timer = 0) {
     
     // --- Step 3: 他の描画に影響が出ないよう、最後に必ずリセットします ---
     ctx.shadowBlur = 0;
+
+    // ★追加：カラーイーターの場合、特別なアイコンを重ねて描画
+    if (isColorEater) {
+        ctx.save(); // 現在の描画状態を保存
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        // フォントサイズはブロックサイズに合わせて調整が必要な場合があります
+        // 現在のスケール(BLOCK_SIZE)を考慮して、1ブロック分の大きさに合わせます
+        ctx.font = '0.7px sans-serif'; // 1pxだと大きすぎるので調整
+        ctx.shadowBlur = 0; // アイコンには影をつけない
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'; // 少し明るい色で
+        ctx.fillText('🌀', x + 0.5, y + 0.55); // ブロックの中央に描画 (Y座標を少し調整)
+        ctx.restore(); // 描画状態を元に戻す
+    }
 }
